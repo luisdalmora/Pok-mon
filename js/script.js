@@ -1,78 +1,106 @@
 // js/script.js
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Seleciona a tabela e os cabeçalhos
-  const table = document.querySelector("table");
-  const headers = table.querySelectorAll("th");
-  const tableBody = table.querySelector("tbody");
+  // --- LÓGICA PARA ALTERNAR ABAS (MENU PRINCIPAL E SÉRIES) ---
+  function setupTabSwitching(buttonSelector, sectionSelector) {
+    const buttons = document.querySelectorAll(buttonSelector);
+    const sections = document.querySelectorAll(sectionSelector);
 
-  // 2. Adiciona um event listener (ouvinte de evento) a cada cabeçalho
-  headers.forEach((header, columnIndex) => {
-    // Define o estado inicial da ordenação para 'desc' (o primeiro clique será 'asc')
-    header.dataset.direction = "desc";
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const targetId = button.getAttribute("data-target");
 
-    // Adiciona um listener para o evento de clique
-    header.addEventListener("click", () => {
-      // Verifica se a coluna é numérica (Pontos Total, Luis, Dalmoras, Théo G)
-      // A coluna 0 é "Coleção" (texto), as demais (1, 2, 3, 4) são números.
-      const isNumeric = columnIndex > 0;
+        buttons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
 
-      // Determina a direção atual e inverte para a próxima ordenação
-      const direction = header.dataset.direction === "asc" ? "desc" : "asc";
-
-      // 3. Limpa os indicadores visuais de ordenação (opcional, mas bom para CSS)
-      headers.forEach((h) => {
-        h.classList.remove("sorted-asc", "sorted-desc");
-        // Mantemos o data-direction para que o loop de headers.forEach() saiba o próximo estado
+        sections.forEach((section) => {
+          section.classList.toggle("active", section.id === targetId);
+        });
       });
-
-      // Adiciona a nova classe de ordenação e atualiza o estado
-      header.classList.add(`sorted-${direction}`);
-      header.dataset.direction = direction;
-
-      // 4. Chama a função de ordenação
-      sortTable(columnIndex, direction, isNumeric);
     });
+  }
+
+  setupTabSwitching(".menu-button", ".content-section");
+  setupTabSwitching(".series-button", ".series-section");
+
+  // --- LÓGICA PARA BOTÕES "SELECIONAR TUDO / LIMPAR" ---
+  const collectionContainers = document.querySelectorAll(
+    ".collection-container"
+  );
+
+  collectionContainers.forEach((container) => {
+    const toggleButton = container.querySelector(".toggle-all-button");
+    if (toggleButton) {
+      const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+
+      toggleButton.addEventListener("click", () => {
+        // Verifica se a ação deve ser "selecionar tudo"
+        const isSelectAllAction =
+          toggleButton.textContent.includes("Selecionar");
+
+        checkboxes.forEach((checkbox) => {
+          checkbox.checked = isSelectAllAction;
+        });
+
+        // Alterna o texto do botão
+        toggleButton.textContent = isSelectAllAction
+          ? "Limpar Seleção"
+          : "Selecionar Tudo";
+      });
+    }
   });
 
-  // 5. Função principal de ordenação
-  function sortTable(column, direction, isNumeric) {
-    // Converte as linhas da tabela em um array para poder usar o método sort()
+  // --- LÓGICA ORIGINAL DE ORDENAÇÃO DA TABELA DE PONTOS ---
+  const table = document.querySelector("#pontos table");
+  if (table) {
+    const headers = table.querySelectorAll("th");
+    const tableBody = table.querySelector("tbody");
+
+    headers.forEach((header, columnIndex) => {
+      header.dataset.direction = "desc";
+      header.addEventListener("click", () => {
+        const isNumeric = columnIndex > 0;
+        const direction = header.dataset.direction === "asc" ? "desc" : "asc";
+
+        headers.forEach((h) => {
+          h.classList.remove("sorted-asc", "sorted-desc");
+        });
+
+        header.classList.add(`sorted-${direction}`);
+        header.dataset.direction = direction;
+
+        sortTable(columnIndex, direction, isNumeric, tableBody);
+      });
+    });
+  }
+
+  function sortTable(column, direction, isNumeric, tableBody) {
     let rows = Array.from(tableBody.querySelectorAll("tr"));
 
     rows.sort((a, b) => {
-      // Extrai o texto da célula da coluna clicada
-      let aText = a.children[column].textContent.trim();
-      let bText = b.children[column].textContent.trim();
+      let aCell = a.children[column];
+      let bCell = b.children[column];
 
-      // Remove ' pts' e troca '-' por 0 para permitir a comparação numérica
+      // Tenta encontrar um input dentro da célula para obter o valor
+      let aInput = aCell.querySelector("input");
+      let bInput = bCell.querySelector("input");
+
+      let aText = (aInput ? aInput.value : aCell.textContent).trim();
+      let bText = (bInput ? bInput.value : bCell.textContent).trim();
+
       if (isNumeric) {
-        // Limpa unidades como 'pts' e trata '-' (sem pontos) como zero
-        aText = aText.replace(" pts", "").replace("-", "0");
-        bText = bText.replace(" pts", "").replace("-", "0");
+        let aValue = parseFloat(aText.replace(/[^0-9.-]+/g, "")) || 0;
+        let bValue = parseFloat(bText.replace(/[^0-9.-]+/g, "")) || 0;
 
-        let aValue = parseFloat(aText);
-        let bValue = parseFloat(bText);
-
-        if (aValue < bValue) {
-          return direction === "asc" ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return direction === "asc" ? 1 : -1;
-        }
+        if (aValue < bValue) return direction === "asc" ? -1 : 1;
+        if (aValue > bValue) return direction === "asc" ? 1 : -1;
       } else {
-        // Comparação de texto (string)
-        if (aText < bText) {
-          return direction === "asc" ? -1 : 1;
-        }
-        if (aText > bText) {
-          return direction === "asc" ? 1 : -1;
-        }
+        if (aText < bText) return direction === "asc" ? -1 : 1;
+        if (aText > bText) return direction === "asc" ? 1 : -1;
       }
-      return 0; // Se forem iguais
+      return 0;
     });
 
-    // 6. Atualiza a tabela com as linhas na nova ordem
     rows.forEach((row) => tableBody.appendChild(row));
   }
 });

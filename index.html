@@ -14,6 +14,7 @@
       font-family: 'Inter', sans-serif;
     }
 
+    /* --- ESTADOS DE BOTÕES --- */
     .menu-button.active,
     .series-button.active {
       background-color: #4A5568;
@@ -22,6 +23,7 @@
       /* gray-100 */
     }
 
+    /* --- CONTROLE DE VISIBILIDADE --- */
     .content-section,
     .series-section {
       display: none;
@@ -32,6 +34,7 @@
       display: block;
     }
 
+    /* --- ESTILOS DE CABEÇALHO DA COLEÇÃO --- */
     .collection-header {
       display: flex;
       align-items: center;
@@ -50,6 +53,18 @@
       border-bottom: none;
       padding-bottom: 0;
     }
+
+    /* --- MELHORIAS DE ACESSIBILIDADE E USABILIDADE --- */
+    .menu-button:focus-visible,
+    .series-button:focus-visible,
+    .toggle-all-button:focus-visible,
+    input[type="checkbox"]:focus-visible {
+      outline: 2px solid #FBBF24;
+      /* Cor amarela para destaque (yellow-400) */
+      outline-offset: 2px;
+      border-radius: 4px;
+      /* Adiciona bordas arredondadas ao foco */
+    }
   </style>
 </head>
 
@@ -62,7 +77,6 @@
       <p class="text-lg text-gray-400">Pokémon TCG Pocket</p>
     </header>
 
-    <!-- Menu Principal -->
     <nav class="bg-gray-800 rounded-lg p-2 mb-8 flex justify-center space-x-2 md:space-x-4">
       <button data-target="colecao"
         class="menu-button active flex-1 md:flex-none text-center py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-300">Coleção</button>
@@ -74,105 +88,114 @@
     </nav>
 
     <main>
-      <!-- Seção: Coleção -->
       <section id="colecao" class="content-section active">
-        <!-- Submenu para Séries -->
-        <div class="bg-gray-800/50 rounded-md p-2 mb-6 flex justify-start space-x-2">
+        <nav class="bg-gray-800/50 rounded-md p-2 mb-6 flex justify-start space-x-2">
           <button data-target="series-a"
             class="series-button active py-2 px-4 rounded-md text-sm hover:bg-gray-700 transition-colors duration-300">Series
             A</button>
           <button data-target="series-b"
             class="series-button py-2 px-4 rounded-md text-sm hover:bg-gray-700 transition-colors duration-300">Series
             B</button>
-        </div>
+        </nav>
 
-        <!-- Conteúdo da Series A -->
         <div id="series-a" class="series-section active space-y-8">
 
-          <!-- Genetic Apex -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/geneticapex.png" alt="Genetic Apex Logo">
               <h2 class="text-2xl font-semibold">Genetic Apex – <span id="genetic-apex-points">0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               <div>
                 <h4 class="text-md font-semibold text-gray-400 mt-2">The Immersive 4</h4>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">274 - Moltres ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">275 - Articuno ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">276 - Zapdos ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">274 - Moltres ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">275 - Articuno ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">276 - Zapdos ex</span></label>
               </div>
               <div>
                 <h4 class="text-md font-semibold text-gray-400 mt-2">The Immersive 4</h4>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">280 - Charizard ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">281 - Pikachu ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">282 - Mewtwo ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">283 - Mew</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">280 - Charizard ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">281 - Pikachu ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">282 - Mewtwo ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">283 - Mew</span></label>
               </div>
               <div>
                 <h4 class="text-md font-semibold text-gray-400 mt-2">The Gym Leaders of the Kanto Region 2</h4>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">266 Erika</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">267 Misty</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">268 Blaine</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">269 Koga</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">270 Giovanni</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">271 Brock</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">272 Sabrina</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">273 Lt. Surge</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">266 Erika</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">267 Misty</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">268 Blaine</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">269 Koga</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">270 Giovanni</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">271 Brock</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">272 Sabrina</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">273 Lt. Surge</span></label>
               </div>
             </div>
           </div>
 
-          <!-- Mythical Island -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/mythicalisland.png" alt="Mythical Island Logo">
               <h2 class="text-2xl font-semibold">Mythical Island – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
               <div>
                 <h4 class="text-md font-semibold text-gray-400 mt-2">Mythical Island Museum 2</h4>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">83 - Mew ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">84 - Aerodactyl ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">83 - Mew ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">84 - Aerodactyl ex</span></label>
               </div>
               <div>
                 <h4 class="text-md font-semibold text-gray-400 mt-2">Mew ex Museum</h4>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">32 - Mew ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">77 - Mew ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded" checked><span class="ml-3">83 - Mew ex</span></label>
-                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700 t"><input
-                    type="checkbox" class="h-5 w-5 rounded"><span class="ml-3">86 - Mew ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">32 - Mew ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">77 - Mew ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded" checked><span class="ml-3">83 - Mew ex</span></label>
+                <label class="flex items-center p-2 bg-gray-700/50 rounded-md hover:bg-gray-700"><input type="checkbox"
+                    class="h-5 w-5 rounded"><span class="ml-3">86 - Mew ex</span></label>
               </div>
             </div>
           </div>
 
-          <!-- Space-time Smackdown -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/space-timesmackdown.png" alt="Space-time Smackdown Logo">
               <h2 class="text-2xl font-semibold">Space-time Smackdown – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -214,11 +237,15 @@
             </div>
           </div>
 
-          <!-- Triumphant Light -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/triumphantlight.png" alt="Triumphant Light Logo">
               <h2 class="text-2xl font-semibold">Triumphant Light – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -266,11 +293,15 @@
             </div>
           </div>
 
-          <!-- Shining Revelry -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/shiningrevelry.png" alt="Shining Revelry Logo">
               <h2 class="text-2xl font-semibold">Shining Revelry – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -293,11 +324,15 @@
             </div>
           </div>
 
-          <!-- Celestial Guardians -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/celestialguardians.png" alt="Celestial Guardians Logo">
               <h2 class="text-2xl font-semibold">Celestial Guardians – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
@@ -379,11 +414,15 @@
             </div>
           </div>
 
-          <!-- Extradimensional Crisis -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/extradimensionalcrisis.png" alt="Extradimensional Crisis Logo">
               <h2 class="text-2xl font-semibold">Extradimensional Crisis – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -410,11 +449,15 @@
             </div>
           </div>
 
-          <!-- Eevee Grove -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/eeveegrove.png" alt="Eevee Grove Logo">
               <h2 class="text-2xl font-semibold">Eevee Grove – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -447,11 +490,15 @@
             </div>
           </div>
 
-          <!-- Wisdom of Sea and Sky -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/wisdomofseaandsky.png" alt="Wisdom of Sea and Sky Logo">
               <h2 class="text-2xl font-semibold">Wisdom of Sea and Sky – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -480,11 +527,15 @@
             </div>
           </div>
 
-          <!-- Secluded Springs -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/secludedsprings.png" alt="Secluded Springs Logo">
               <h2 class="text-2xl font-semibold">Secluded Springs – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
@@ -524,11 +575,15 @@
             </div>
           </div>
 
-          <!-- Deluxe Pack EX -->
-          <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+          <div class="collection-container bg-gray-800 p-6 rounded-lg shadow-lg">
             <div class="collection-header">
               <img src="./images/coleções/deluxepackex.png" alt="Deluxe Pack EX Logo">
               <h2 class="text-2xl font-semibold">Deluxe Pack EX – <span>0</span> pts</h2>
+            </div>
+            <div class="flex justify-end mb-4">
+              <button
+                class="toggle-all-button text-sm py-1 px-3 rounded-md bg-gray-600 hover:bg-gray-500 transition-colors duration-200">Selecionar
+                Tudo</button>
             </div>
             <h3 class="text-lg font-medium text-yellow-300 mb-3">Missões</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-4">
@@ -589,7 +644,6 @@
           </div>
         </div>
 
-        <!-- Conteúdo da Series B -->
         <div id="series-b" class="series-section">
           <div class="bg-gray-800 p-6 rounded-lg shadow-lg text-center">
             <h2 class="text-2xl font-semibold text-gray-400">Series B</h2>
@@ -598,7 +652,6 @@
         </div>
       </section>
 
-      <!-- Seção: Pontos -->
       <section id="pontos" class="content-section">
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
           <h2 class="text-2xl font-semibold mb-4">Pontuação por Coleção</h2>
@@ -661,7 +714,6 @@
         </div>
       </section>
 
-      <!-- Seção: Códigos de Amizade -->
       <section id="codigos" class="content-section">
         <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
           <h2 class="text-2xl font-semibold mb-4">Códigos de Amizade</h2>
@@ -704,37 +756,55 @@
         </div>
       </section>
     </main>
+
+    <footer class="text-center text-sm text-gray-500 mt-12 py-4 border-t border-gray-800">
+      <p>&copy; 2024 Gerenciador de Coleção Pokémon TCG Pocket. Todos os direitos reservados.</p>
+    </footer>
+
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const menuButtons = document.querySelectorAll('.menu-button');
-      const contentSections = document.querySelectorAll('.content-section');
-      const seriesButtons = document.querySelectorAll('.series-button');
-      const seriesSections = document.querySelectorAll('.series-section');
+      // --- LÓGICA PARA ALTERNAR ABAS (MENU PRINCIPAL E SÉRIES) ---
+      function setupTabSwitching(buttonSelector, sectionSelector) {
+        const buttons = document.querySelectorAll(buttonSelector);
+        const sections = document.querySelectorAll(sectionSelector);
 
-      // Lógica para alternar entre as abas do menu principal
-      menuButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const targetId = button.getAttribute('data-target');
-          menuButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          contentSections.forEach(section => {
-            section.classList.toggle('active', section.id === targetId);
+        buttons.forEach(button => {
+          button.addEventListener('click', () => {
+            const targetId = button.getAttribute('data-target');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            sections.forEach(section => {
+              section.classList.toggle('active', section.id === targetId);
+            });
           });
         });
-      });
+      }
 
-      // Lógica para alternar entre as abas das séries
-      seriesButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          const targetId = button.getAttribute('data-target');
-          seriesButtons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
-          seriesSections.forEach(section => {
-            section.classList.toggle('active', section.id === targetId);
+      setupTabSwitching('.menu-button', '.content-section');
+      setupTabSwitching('.series-button', '.series-section');
+
+      // --- LÓGICA PARA BOTÕES "SELECIONAR TUDO / LIMPAR" ---
+      const collectionContainers = document.querySelectorAll('.collection-container');
+
+      collectionContainers.forEach(container => {
+        const toggleButton = container.querySelector('.toggle-all-button');
+        if (toggleButton) {
+          const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+
+          toggleButton.addEventListener('click', () => {
+            const isSelectAllAction = toggleButton.textContent.includes('Selecionar');
+
+            checkboxes.forEach(checkbox => {
+              checkbox.checked = isSelectAllAction;
+            });
+
+            toggleButton.textContent = isSelectAllAction ? 'Limpar Seleção' : 'Selecionar Tudo';
           });
-        });
+        }
       });
     });
   </script>
